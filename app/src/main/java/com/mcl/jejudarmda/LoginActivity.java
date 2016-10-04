@@ -3,8 +3,10 @@ package com.mcl.jejudarmda;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -17,6 +19,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private RelativeLayout facebookLayout, instagarmLayout, youtubeLayout, kakaostoryLayout, naverblogLayout;
     private TextView facebookStatus, instagramStatus, youtubeStatus, kakaostoryStatus, naverblogStatus;
+
+    private FloatingActionButton writeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         youtubeStatus = (TextView) findViewById(R.id.youtube_status_text);
         kakaostoryStatus = (TextView) findViewById(R.id.kakaostory_status_text);
         naverblogStatus = (TextView) findViewById(R.id.naver_blog_status_text);
+
+        writeButton = (FloatingActionButton) findViewById(R.id.write_button);
+        writeButton.setOnClickListener(this);
 
         checkAllStatus();
     }
@@ -78,6 +85,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         else if(v.equals(naverblogLayout)){
             buildAndShowDialog("Naver Blog", LoginStatus.getNaverblog());
+        }
+        else if(v.equals(writeButton)){
+            startActivity(new Intent(LoginActivity.this, WritingActivity.class));
         }
     }
 
