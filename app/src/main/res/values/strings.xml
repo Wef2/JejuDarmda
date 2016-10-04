@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JejuDarmda</string>
+    <string name="login_status">로그인 상태</string>
 </resources>
