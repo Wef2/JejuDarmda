@@ -27,10 +27,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private OAuthLogin oAuthLogin;
 
-    private String NAVER_OAUTH_CLIENT_ID;
-    private String NAVER_OAUTH_CLENT_SECRET;
-    private String NAVER_OAUTH_CLIENT_NAME;
-
     private OAuthLoginHandler oAuthLoginHandler = new OAuthLoginHandler() {
         @Override
         public void run(boolean success) {
@@ -75,16 +71,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         checkAllStatus();
 
-        NAVER_OAUTH_CLIENT_ID = getResources().getString(R.string.naver_oauth_client_id);
-        NAVER_OAUTH_CLENT_SECRET = getResources().getString(R.string.naver_oauth_client_secret);
-        NAVER_OAUTH_CLIENT_NAME = getResources().getString(R.string.naver_oauth_client_name);
-
         oAuthLogin = OAuthLogin.getInstance();
         oAuthLogin.init(
                 this,
-                NAVER_OAUTH_CLIENT_ID,
-                NAVER_OAUTH_CLENT_SECRET,
-                NAVER_OAUTH_CLIENT_NAME
+                JejuDarmda.NAVER_OAUTH_CLIENT_ID,
+                JejuDarmda.NAVER_OAUTH_CLENT_SECRET,
+                JejuDarmda.NAVER_OAUTH_CLIENT_NAME
         );
     }
 
