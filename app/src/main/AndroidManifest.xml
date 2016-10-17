@@ -24,8 +24,13 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/login_status" />
-        <activity android:name=".WritingActivity"
+        <activity
+            android:name=".WritingActivity"
             android:label="@string/writing"></activity>
+        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
+            android:label="OAuth2.0 In-app"/>
     </application>
 
 </manifest>

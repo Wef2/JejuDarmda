@@ -1,7 +1,6 @@
 package com.mcl.jejudarmda;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +24,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView facebookStatus, instagramStatus, youtubeStatus, kakaostoryStatus, naverblogStatus;
 
     private FloatingActionButton writeButton;
+
+    private OAuthLogin oAuthLogin;
+
+    private String NAVER_OAUTH_CLIENT_ID;
+    private String NAVER_OAUTH_CLENT_SECRET;
+    private String NAVER_OAUTH_CLIENT_NAME;
+
+    private OAuthLoginHandler oAuthLoginHandler = new OAuthLoginHandler() {
+        @Override
+        public void run(boolean success) {
+            if (success) {
+                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                LoginStatus.setNaverblog(true);
+                checkAllStatus();
+            } else {
+                String errorCode = oAuthLogin.getLastErrorCode(LoginActivity.this).getCode();
+                String errorDesc = oAuthLogin.getLastErrorDesc(LoginActivity.this);
+                Toast.makeText(LoginActivity.this, "errorCode:" + errorCode
+                        + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +74,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         writeButton.setOnClickListener(this);
 
         checkAllStatus();
+
+        NAVER_OAUTH_CLIENT_ID = getResources().getString(R.string.naver_oauth_client_id);
+        NAVER_OAUTH_CLENT_SECRET = getResources().getString(R.string.naver_oauth_client_secret);
+        NAVER_OAUTH_CLIENT_NAME = getResources().getString(R.string.naver_oauth_client_name);
+
+        oAuthLogin = OAuthLogin.getInstance();
+        oAuthLogin.init(
+                this,
+                NAVER_OAUTH_CLIENT_ID,
+                NAVER_OAUTH_CLENT_SECRET,
+                NAVER_OAUTH_CLIENT_NAME
+        );
     }
 
-    private void setColorByStatus(boolean status, TextView textView) {
+    private void setTextByStatus(boolean status, TextView textView) {
         if (status) {
             textView.setText("ON");
             textView.setTextColor(Color.parseColor(RGB_BLUE));
@@ -62,41 +99,40 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void checkAllStatus() {
-        setColorByStatus(LoginStatus.getFacebook(), facebookStatus);
-        setColorByStatus(LoginStatus.getInstagram(), instagramStatus);
-        setColorByStatus(LoginStatus.getYoutube(), youtubeStatus);
-        setColorByStatus(LoginStatus.getKakaostory(), kakaostoryStatus);
-        setColorByStatus(LoginStatus.getNaverblog(), naverblogStatus);
+        setTextByStatus(LoginStatus.getFacebook(), facebookStatus);
+        setTextByStatus(LoginStatus.getInstagram(), instagramStatus);
+        setTextByStatus(LoginStatus.getYoutube(), youtubeStatus);
+        setTextByStatus(LoginStatus.getKakaostory(), kakaostoryStatus);
+        setTextByStatus(LoginStatus.getNaverblog(), naverblogStatus);
     }
 
     @Override
     public void onClick(View v) {
-        if(v.equals(facebookLayout)){
+        if (v.equals(facebookLayout)) {
             buildAndShowDialog("Facebook", LoginStatus.getFacebook());
-        }
-        else if(v.equals(instagarmLayout)){
+        } else if (v.equals(instagarmLayout)) {
             buildAndShowDialog("Instagram", LoginStatus.getInstagram());
-        }
-        else if(v.equals(youtubeLayout)){
+        } else if (v.equals(youtubeLayout)) {
             buildAndShowDialog("Youtube", LoginStatus.getYoutube());
-        }
-        else if(v.equals(kakaostoryLayout)){
+        } else if (v.equals(kakaostoryLayout)) {
             buildAndShowDialog("Kakaostory", LoginStatus.getKakaostory());
-        }
-        else if(v.equals(naverblogLayout)){
+        } else if (v.equals(naverblogLayout)) {
             buildAndShowDialog("Naver Blog", LoginStatus.getNaverblog());
-        }
-        else if(v.equals(writeButton)){
+        } else if (v.equals(writeButton)) {
             startActivity(new Intent(LoginActivity.this, WritingActivity.class));
         }
     }
 
-    private void buildAndShowDialog(String channel, boolean status){
+    private void buildAndShowDialog(final String channel, final boolean status) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this).setTitle(channel);
         alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                if (status) {
+                    logout(channel);
+                } else {
+                    login(channel);
+                }
             }
         });
         alertDialogBuilder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -105,13 +141,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
-        if(status){
+        if (status) {
             alertDialogBuilder.setMessage("로그아웃 하시겠습니까?");
-        }
-        else{
+        } else {
             alertDialogBuilder.setMessage("로그인 하시겠습니까?");
         }
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void login(String channel) {
+        oAuthLogin.startOauthLoginActivity(this, oAuthLoginHandler);
+    }
+
+    public void logout(String channel) {
+        oAuthLogin.logout(this);
+        LoginStatus.setNaverblog(false);
+        checkAllStatus();
     }
 }
