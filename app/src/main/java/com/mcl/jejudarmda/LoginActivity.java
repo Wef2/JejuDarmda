@@ -12,10 +12,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kakao.auth.ErrorCode;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private final int KAKAO_LOGIN_SUCCESS = 100;
+
+    private final String NAVER = "Naver";
+    private final String YOUTUBE = "Youtube";
+    private final String KAKAO = "Kakao";
+    private final String INSTAGRAM = "Instagram";
+    private final String FACEBOOK = "Facebook";
 
     private final String RGB_RED = "#C0392B";
     private final String RGB_BLUE = "#3498DB";
@@ -31,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         public void run(boolean success) {
             if (success) {
-                Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "네이버 로그인 성공", Toast.LENGTH_SHORT).show();
                 LoginStatus.setNaverblog(true);
                 checkAllStatus();
             } else {
@@ -80,6 +97,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         );
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        kakaoRequestMe();
+    }
+
     private void setTextByStatus(boolean status, TextView textView) {
         if (status) {
             textView.setText("ON");
@@ -101,15 +125,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v.equals(facebookLayout)) {
-            buildAndShowDialog("Facebook", LoginStatus.getFacebook());
+            buildAndShowDialog(FACEBOOK, LoginStatus.getFacebook());
         } else if (v.equals(instagarmLayout)) {
-            buildAndShowDialog("Instagram", LoginStatus.getInstagram());
+            buildAndShowDialog(INSTAGRAM, LoginStatus.getInstagram());
         } else if (v.equals(youtubeLayout)) {
-            buildAndShowDialog("Youtube", LoginStatus.getYoutube());
+            buildAndShowDialog(YOUTUBE, LoginStatus.getYoutube());
         } else if (v.equals(kakaostoryLayout)) {
-            buildAndShowDialog("Kakaostory", LoginStatus.getKakaostory());
+            buildAndShowDialog(KAKAO, LoginStatus.getKakaostory());
         } else if (v.equals(naverblogLayout)) {
-            buildAndShowDialog("Naver Blog", LoginStatus.getNaverblog());
+            buildAndShowDialog(NAVER, LoginStatus.getNaverblog());
         } else if (v.equals(writeButton)) {
             startActivity(new Intent(LoginActivity.this, WritingActivity.class));
         }
@@ -143,12 +167,60 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void login(String channel) {
-        oAuthLogin.startOauthLoginActivity(this, oAuthLoginHandler);
+        switch (channel) {
+            case NAVER:
+                oAuthLogin.startOauthLoginActivity(this, oAuthLoginHandler);
+                break;
+            case KAKAO:
+                startActivity(new Intent(LoginActivity.this, KakaoLoginActivity.class));
+                break;
+        }
     }
 
     public void logout(String channel) {
-        oAuthLogin.logout(this);
-        LoginStatus.setNaverblog(false);
+        switch (channel) {
+            case NAVER:
+                oAuthLogin.logout(this);
+                LoginStatus.setNaverblog(false);
+                break;
+            case KAKAO:
+
+                break;
+        }
         checkAllStatus();
     }
+
+
+    protected void kakaoRequestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+                if (result == ErrorCode.CLIENT_ERROR_CODE) {
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                LoginStatus.setKakaostory(false);
+                checkAllStatus();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+                LoginStatus.setKakaostory(false);
+                checkAllStatus();
+            }
+
+            @Override
+            public void onSuccess(UserProfile userProfile) {
+                LoginStatus.setKakaostory(true);
+                checkAllStatus();
+            }
+        });
+    }
+
 }
