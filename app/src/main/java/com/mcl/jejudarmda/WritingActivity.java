@@ -10,9 +10,23 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.google.gson.JsonObject;
+import com.kakao.auth.ApiResponseCallback;
+import com.kakao.auth.AuthService;
+import com.kakao.auth.network.response.AccessTokenInfoResponse;
+import com.kakao.kakaostory.KakaoStoryService;
+import com.kakao.kakaostory.api.KakaoStoryApi;
+import com.kakao.kakaostory.callback.StoryResponseCallback;
+import com.kakao.kakaostory.request.PostRequest;
+import com.kakao.kakaostory.response.model.MyStoryInfo;
+import com.kakao.network.ErrorResult;
+import com.kakao.network.callback.ResponseCallback;
+import com.kakao.util.KakaoParameterException;
+import com.kakao.util.helper.log.Logger;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WritingActivity extends AppCompatActivity {
 
@@ -26,6 +40,8 @@ public class WritingActivity extends AppCompatActivity {
 
         titleEdit = (EditText) findViewById(R.id.title_edit);
         contentsEdit = (EditText) findViewById(R.id.contents_edit);
+
+        requestKakaoAccessTokenInfo();
     }
 
     @Override
@@ -52,6 +68,7 @@ public class WritingActivity extends AppCompatActivity {
 
     public void writePost(String title, String contents) {
         naverPost(title, contents);
+        kakaoPost(contents);
     }
 
     public void naverPost(String title, String contents) {
@@ -64,5 +81,80 @@ public class WritingActivity extends AppCompatActivity {
                 Toast.makeText(WritingActivity.this, response.toString(), Toast.LENGTH_SHORT);
             }
         });
+    }
+
+    public void kakaoPost(String contents)  {
+        try {
+            KakaoStoryService.requestPostNote(new StoryResponseCallback<MyStoryInfo>() {
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+
+                }
+
+                @Override
+                public void onNotSignedUp() {
+
+                }
+
+                @Override
+                public void onNotKakaoStoryUser() {
+
+                }
+
+                @Override
+                public void onSuccess(MyStoryInfo result) {
+                    Logger.d(result.toString());
+                }
+            }, contents, PostRequest.StoryPermission.ONLY_ME, true, "test", null, null, null);
+        } catch (KakaoParameterException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void requestKakaoAccessTokenInfo() {
+        AuthService.requestAccessTokenInfo(new ApiResponseCallback<AccessTokenInfoResponse>() {
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+
+            }
+
+            @Override
+            public void onNotSignedUp() {
+
+            }
+
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+            }
+
+            @Override
+            public void onSuccess(AccessTokenInfoResponse accessTokenInfoResponse) {
+                Toast.makeText(WritingActivity.this, accessTokenInfoResponse.toString(), Toast.LENGTH_SHORT).show();
+                KakaoStoryService.requestIsStoryUser(new StoryResponseCallback<Boolean>() {
+                    @Override
+                    public void onNotKakaoStoryUser() {
+
+                    }
+
+                    @Override
+                    public void onSessionClosed(ErrorResult errorResult) {
+
+                    }
+
+                    @Override
+                    public void onNotSignedUp() {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Boolean result) {
+                        Toast.makeText(WritingActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+
     }
 }

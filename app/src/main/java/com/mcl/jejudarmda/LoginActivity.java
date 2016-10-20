@@ -13,14 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kakao.auth.ErrorCode;
-import com.kakao.auth.ISessionCallback;
-import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
-import com.kakao.util.exception.KakaoException;
-import com.kakao.util.helper.log.Logger;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
@@ -57,6 +54,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(LoginActivity.this, "errorCode:" + errorCode
                         + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
             }
+        }
+    };
+
+    private LogoutResponseCallback kakaoLogoutCallback = new LogoutResponseCallback() {
+        @Override
+        public void onCompleteLogout() {
+            Toast.makeText(LoginActivity.this, "로그아웃", Toast.LENGTH_SHORT).show();
+            LoginStatus.setKakaostory(false);
+            checkAllStatus();
         }
     };
 
@@ -98,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
         kakaoRequestMe();
@@ -184,7 +190,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 LoginStatus.setNaverblog(false);
                 break;
             case KAKAO:
-
+                UserManagement.requestLogout(kakaoLogoutCallback);
+                LoginStatus.setKakaostory(false);
                 break;
         }
         checkAllStatus();
