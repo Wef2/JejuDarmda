@@ -75,7 +75,7 @@ public class WritingActivity extends AppCompatActivity {
         String url = NAVER_URL;
         url = url + "?title=" + title;
         url = url + "&contents=" + contents;
-        VolleyRequest.get(url, null, new Response.Listener<JsonObject>() {
+        VolleyRequest.naverGet(url, null, new Response.Listener<JsonObject>() {
             @Override
             public void onResponse(JsonObject response) {
                 Toast.makeText(WritingActivity.this, response.toString(), Toast.LENGTH_SHORT);

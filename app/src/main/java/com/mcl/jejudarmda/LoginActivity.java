@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private final int KAKAO_LOGIN_SUCCESS = 100;
 
     private final String NAVER = "Naver";
-    private final String YOUTUBE = "Youtube";
     private final String KAKAO = "Kakao";
     private final String INSTAGRAM = "Instagram";
     private final String FACEBOOK = "Facebook";
@@ -73,7 +72,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         facebookLayout = (RelativeLayout) findViewById(R.id.facebook_layout);
         instagarmLayout = (RelativeLayout) findViewById(R.id.instagram_layout);
-        youtubeLayout = (RelativeLayout) findViewById(R.id.youtube_layout);
         kakaostoryLayout = (RelativeLayout) findViewById(R.id.kakaostory_layout);
         naverblogLayout = (RelativeLayout) findViewById(R.id.naver_blog_layout);
 
@@ -85,7 +83,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         facebookStatus = (TextView) findViewById(R.id.facebook_status_text);
         instagramStatus = (TextView) findViewById(R.id.instagram_status_text);
-        youtubeStatus = (TextView) findViewById(R.id.youtube_status_text);
         kakaostoryStatus = (TextView) findViewById(R.id.kakaostory_status_text);
         naverblogStatus = (TextView) findViewById(R.id.naver_blog_status_text);
 
@@ -123,7 +120,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void checkAllStatus() {
         setTextByStatus(LoginStatus.getFacebook(), facebookStatus);
         setTextByStatus(LoginStatus.getInstagram(), instagramStatus);
-        setTextByStatus(LoginStatus.getYoutube(), youtubeStatus);
         setTextByStatus(LoginStatus.getKakaostory(), kakaostoryStatus);
         setTextByStatus(LoginStatus.getNaverblog(), naverblogStatus);
     }
@@ -134,8 +130,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             buildAndShowDialog(FACEBOOK, LoginStatus.getFacebook());
         } else if (v.equals(instagarmLayout)) {
             buildAndShowDialog(INSTAGRAM, LoginStatus.getInstagram());
-        } else if (v.equals(youtubeLayout)) {
-            buildAndShowDialog(YOUTUBE, LoginStatus.getYoutube());
         } else if (v.equals(kakaostoryLayout)) {
             buildAndShowDialog(KAKAO, LoginStatus.getKakaostory());
         } else if (v.equals(naverblogLayout)) {

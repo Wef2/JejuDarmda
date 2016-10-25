@@ -46,23 +46,23 @@ public class VolleyRequest {
         };
     }
 
-    public static void request(int method, String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener, Response.ErrorListener errorListener) {
-        GsonJsonRequest gsonJsonRequest = new GsonJsonRequest(method, url, jsonRequest, listener, errorListener);
-        requestQueue.add(gsonJsonRequest);
+    public static void naverRequest(int method, String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener, Response.ErrorListener errorListener) {
+        NaverJsonRequest naverRequest = new NaverJsonRequest(method, url, jsonRequest, listener, errorListener);
+        requestQueue.add(naverRequest);
     }
 
-    public static void post(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
-        request(Request.Method.POST, url, jsonRequest, listener, errorListener);
+    public static void naverPost(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
+        naverRequest(Request.Method.POST, url, jsonRequest, listener, errorListener);
     }
 
-    public static void get(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
-        request(Request.Method.GET, url, jsonRequest, listener, errorListener);
+    public static void naverGet(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
+        naverRequest(Request.Method.GET, url, jsonRequest, listener, errorListener);
     }
 
 
-    public static class GsonJsonRequest extends JsonRequest<JsonObject> {
+    public static class NaverJsonRequest extends JsonRequest<JsonObject> {
 
-        public GsonJsonRequest(int method, String url, JsonObject jsonRequest,
+        public NaverJsonRequest(int method, String url, JsonObject jsonRequest,
                                Response.Listener<JsonObject> listener, Response.ErrorListener errorListener) {
             super(method, url, (jsonRequest == null) ? null : jsonRequest.toString(), listener, errorListener);
         }
