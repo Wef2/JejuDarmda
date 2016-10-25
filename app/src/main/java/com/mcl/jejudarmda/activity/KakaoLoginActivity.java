@@ -1,4 +1,4 @@
-package com.mcl.jejudarmda;
+package com.mcl.jejudarmda.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+import com.mcl.jejudarmda.R;
 
 public class KakaoLoginActivity extends AppCompatActivity {
 

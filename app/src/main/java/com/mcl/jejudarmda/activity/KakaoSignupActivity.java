@@ -1,4 +1,4 @@
-package com.mcl.jejudarmda;
+package com.mcl.jejudarmda.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

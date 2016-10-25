@@ -1,4 +1,4 @@
-package com.mcl.jejudarmda;
+package com.mcl.jejudarmda.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,19 +14,17 @@ import com.kakao.auth.ApiResponseCallback;
 import com.kakao.auth.AuthService;
 import com.kakao.auth.network.response.AccessTokenInfoResponse;
 import com.kakao.kakaostory.KakaoStoryService;
-import com.kakao.kakaostory.api.KakaoStoryApi;
 import com.kakao.kakaostory.callback.StoryResponseCallback;
 import com.kakao.kakaostory.request.PostRequest;
 import com.kakao.kakaostory.response.model.MyStoryInfo;
 import com.kakao.network.ErrorResult;
-import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.KakaoParameterException;
 import com.kakao.util.helper.log.Logger;
+import com.mcl.jejudarmda.R;
+import com.mcl.jejudarmda.VolleyRequest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class WritingActivity extends AppCompatActivity {
 

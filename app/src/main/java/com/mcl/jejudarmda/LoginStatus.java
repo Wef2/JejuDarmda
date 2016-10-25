@@ -9,12 +9,14 @@ public class LoginStatus {
     private static boolean instagram;
     private static boolean kakaostory;
     private static boolean naverblog;
+    private static boolean daum;
 
     public static void init() {
         facebook = false;
         instagram = false;
         kakaostory = false;
         naverblog = false;
+        daum = false;
     }
 
     public static boolean getFacebook() {
@@ -47,5 +49,13 @@ public class LoginStatus {
 
     public static void setNaverblog(boolean status) {
         naverblog = status;
+    }
+
+    public static boolean getDaum() {
+        return daum;
+    }
+
+    public static void setDaum(boolean daum) {
+        LoginStatus.daum = daum;
     }
 }

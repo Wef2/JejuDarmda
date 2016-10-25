@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".SelectionActivity">
+    tools:context=".activity.SelectionActivity">
 
     <RelativeLayout
         android:id="@+id/facebook_layout"
@@ -67,6 +67,42 @@
 
         <TextView
             android:id="@+id/instagram_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="OFF"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/daum_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_border"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/daum_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/daum" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Daum"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/daum_status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

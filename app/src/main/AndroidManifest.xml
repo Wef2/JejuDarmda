@@ -3,6 +3,8 @@
     package="com.mcl.jejudarmda">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".JejuDarmda"
@@ -11,9 +13,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectionActivity" />
+        <activity android:name=".activity.SelectionActivity" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +24,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/login_status" />
+            android:name=".activity.LoginActivity"
+            android:label="@string/login_status"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="daum-6065286625264640782" />
+            </intent-filter>
+        </activity>
+
         <activity
-            android:name=".WritingActivity"
+            android:name=".activity.WritingActivity"
             android:label="@string/writing" />
         <activity
             android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
@@ -48,8 +62,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".KakaoLoginActivity" />
-        <activity android:name=".KakaoSignupActivity"></activity>
+        <activity android:name=".activity.KakaoLoginActivity" />
+        <activity android:name=".activity.KakaoSignupActivity" />
+
     </application>
 
 </manifest>

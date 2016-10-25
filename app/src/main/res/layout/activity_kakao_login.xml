@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mcl.jejudarmda.KakaoLoginActivity">
+    tools:context=".activity.KakaoLoginActivity">
 
     <com.kakao.usermgmt.LoginButton
         android:id="@+id/com_kakao_login"
