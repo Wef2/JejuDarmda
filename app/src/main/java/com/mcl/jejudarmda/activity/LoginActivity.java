@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private RelativeLayout facebookLayout, instagarmLayout, daumLayout, kakaostoryLayout, naverblogLayout;
     private TextView facebookStatus, instagramStatus, daumStatus, kakaostoryStatus, naverblogStatus;
-    MobileOAuthLibrary.OAuthListener oAuthListener = new MobileOAuthLibrary.OAuthListener() {
+    private Button settingsButton;
+
+    private MobileOAuthLibrary.OAuthListener oAuthListener = new MobileOAuthLibrary.OAuthListener() {
         @Override
         public void onAuthorizeSuccess() {
             Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
@@ -138,6 +141,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         kakaostoryStatus = (TextView) findViewById(R.id.kakaostory_status_text);
         naverblogStatus = (TextView) findViewById(R.id.naver_blog_status_text);
 
+        settingsButton = (Button) findViewById(R.id.settings_button);
+        settingsButton.setOnClickListener(this);
+
         writeButton = (FloatingActionButton) findViewById(R.id.write_button);
         writeButton.setOnClickListener(this);
 
@@ -206,6 +212,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             buildAndShowDialog(KAKAO, LoginStatus.getKakaostory());
         } else if (v.equals(naverblogLayout)) {
             buildAndShowDialog(NAVER, LoginStatus.getNaverblog());
+        } else if (v.equals(settingsButton)) {
+            startActivity(new Intent(LoginActivity.this, SettingsActivity.class));
         } else if (v.equals(writeButton)) {
             startActivity(new Intent(LoginActivity.this, WritingActivity.class));
         }

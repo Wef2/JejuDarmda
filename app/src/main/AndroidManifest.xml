@@ -27,7 +27,6 @@
             android:name=".activity.LoginActivity"
             android:label="@string/login_status"
             android:launchMode="singleTask">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -37,7 +36,6 @@
                 <data android:scheme="daum-6065286625264640782" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.WritingActivity"
             android:label="@string/writing" />
@@ -64,7 +62,7 @@
         </activity>
         <activity android:name=".activity.KakaoLoginActivity" />
         <activity android:name=".activity.KakaoSignupActivity" />
-
+        <activity android:name=".activity.SettingsActivity"></activity>
     </application>
 
 </manifest>
