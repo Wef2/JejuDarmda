@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mcl.jejudarmda.LoginStatus;
 import com.mcl.jejudarmda.R;
 
 public class SplashActivity extends AppCompatActivity {

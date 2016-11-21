@@ -6,14 +6,12 @@ package com.mcl.jejudarmda;
 public class LoginStatus {
 
     private static boolean facebook;
-    private static boolean instagram;
     private static boolean kakaostory;
     private static boolean naverblog;
     private static boolean daum;
 
     public static void init() {
         facebook = false;
-        instagram = false;
         kakaostory = false;
         naverblog = false;
         daum = false;
@@ -25,14 +23,6 @@ public class LoginStatus {
 
     public static void setFacebook(boolean status) {
         facebook = status;
-    }
-
-    public static boolean getInstagram() {
-        return instagram;
-    }
-
-    public static void setInstagram(boolean status) {
-        instagram = status;
     }
 
     public static boolean getKakaostory() {
@@ -57,5 +47,9 @@ public class LoginStatus {
 
     public static void setDaum(boolean daum) {
         LoginStatus.daum = daum;
+    }
+
+    public static boolean hasConnection() {
+        return facebook || kakaostory || naverblog || daum;
     }
 }

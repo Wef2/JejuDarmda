@@ -34,14 +34,13 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
     private final String NAVER = "Naver";
     private final String KAKAO = "Kakao";
     private final String DAUM = "Daum";
-    private final String INSTAGRAM = "Instagram";
     private final String FACEBOOK = "Facebook";
 
     private final String RGB_RED = "#C0392B";
     private final String RGB_BLUE = "#3498DB";
 
-    private RelativeLayout facebookLayout, instagarmLayout, daumLayout, kakaostoryLayout, naverblogLayout;
-    private TextView facebookStatus, instagramStatus, daumStatus, kakaostoryStatus, naverblogStatus;
+    private RelativeLayout facebookLayout, daumLayout, kakaostoryLayout, naverblogLayout;
+    private TextView facebookStatus, daumStatus, kakaostoryStatus, naverblogStatus;
     private Button settingsButton;
 
     private MobileOAuthLibrary.OAuthListener oAuthListener = new MobileOAuthLibrary.OAuthListener() {
@@ -124,19 +123,16 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_login_status);
 
         facebookLayout = (RelativeLayout) findViewById(R.id.facebook_layout);
-        instagarmLayout = (RelativeLayout) findViewById(R.id.instagram_layout);
         daumLayout = (RelativeLayout) findViewById(R.id.daum_layout);
         kakaostoryLayout = (RelativeLayout) findViewById(R.id.kakaostory_layout);
         naverblogLayout = (RelativeLayout) findViewById(R.id.naver_blog_layout);
 
         facebookLayout.setOnClickListener(this);
-        instagarmLayout.setOnClickListener(this);
         daumLayout.setOnClickListener(this);
         kakaostoryLayout.setOnClickListener(this);
         naverblogLayout.setOnClickListener(this);
 
         facebookStatus = (TextView) findViewById(R.id.facebook_status_text);
-        instagramStatus = (TextView) findViewById(R.id.instagram_status_text);
         daumStatus = (TextView) findViewById(R.id.daum_status_text);
         kakaostoryStatus = (TextView) findViewById(R.id.kakaostory_status_text);
         naverblogStatus = (TextView) findViewById(R.id.naver_blog_status_text);
@@ -194,18 +190,19 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
 
     private void checkAllStatus() {
         setTextByStatus(LoginStatus.getFacebook(), facebookStatus);
-        setTextByStatus(LoginStatus.getInstagram(), instagramStatus);
         setTextByStatus(LoginStatus.getDaum(), daumStatus);
         setTextByStatus(LoginStatus.getKakaostory(), kakaostoryStatus);
         setTextByStatus(LoginStatus.getNaverblog(), naverblogStatus);
+        if (!LoginStatus.hasConnection()) {
+            startActivity(new Intent(LoginStatusActivity.this, LoginActivity.class));
+            finish();
+        }
     }
 
     @Override
     public void onClick(View v) {
         if (v.equals(facebookLayout)) {
             buildAndShowDialog(FACEBOOK, LoginStatus.getFacebook());
-        } else if (v.equals(instagarmLayout)) {
-            buildAndShowDialog(INSTAGRAM, LoginStatus.getInstagram());
         } else if (v.equals(daumLayout)) {
             buildAndShowDialog(DAUM, LoginStatus.getDaum());
         } else if (v.equals(kakaostoryLayout)) {
