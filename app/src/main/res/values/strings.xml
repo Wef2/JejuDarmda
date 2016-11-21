@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JejuDarmda</string>
+    <string name="app_name">1Click Posting</string>
     <string name="login_status">로그인 상태</string>
     <string name="writing">글쓰기</string>
     <string name="action_send">전송</string>

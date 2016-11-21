@@ -56,7 +56,7 @@ public class KakaoSignupActivity extends AppCompatActivity {
     }
 
     protected void redirectLoginActivity() {
-        final Intent intent = new Intent(this, LoginActivity.class);
+        final Intent intent = new Intent(this, LoginStatusActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();

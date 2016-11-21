@@ -1,202 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".activity.SelectionActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.mcl.jejudarmda.activity.LoginActivity">
 
-    <RelativeLayout
-        android:id="@+id/facebook_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:padding="15dp">
-
-        <ImageView
-            android:id="@+id/facebook_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/facebook" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Facebook"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/facebook_status_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="OFF"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="20dp" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/instagram_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:padding="15dp">
-
-        <ImageView
-            android:id="@+id/instagram_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/instagram" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Instagram"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/instagram_status_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="OFF"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/daum_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:padding="15dp">
-
-        <ImageView
-            android:id="@+id/daum_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/daum" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Daum"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/daum_status_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="OFF"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/kakaostory_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:padding="15dp">
-
-        <ImageView
-            android:id="@+id/kakaostory_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/kakaostory" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Kakaostory"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/kakaostory_status_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="OFF"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/naver_blog_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:padding="15dp">
-
-        <ImageView
-            android:id="@+id/naver_blog_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/naver" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Naver Blog"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/naver_blog_status_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="OFF"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/settings_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="설정" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/write_button"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_mode_edit_24dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="1Click Posting"
+        android:textColor="@color/colorText"
+        android:textSize="35dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/logo" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:textCursorDrawable="@color/colorText" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/edittext_background"
+        android:padding="10dp"
+        android:textCursorDrawable="@color/colorText" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@color/colorAccent"
+        android:text="LOG IN"
+        android:textColor="@color/colorText" />
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/layout_bottom_border">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <com.kakao.usermgmt.LoginButton
+            android:id="@+id/com_kakao_login"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

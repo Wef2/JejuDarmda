@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.LoginStatusActivity"
             android:label="@string/login_status"
             android:launchMode="singleTask">
             <intent-filter>
@@ -62,7 +62,9 @@
         </activity>
         <activity android:name=".activity.KakaoLoginActivity" />
         <activity android:name=".activity.KakaoSignupActivity" />
-        <activity android:name=".activity.SettingsActivity"></activity>
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>
