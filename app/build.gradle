@@ -33,4 +33,10 @@ dependencies {
     // Kakao SDK
     compile group: 'com.kakao.sdk', name: 'kakaolink', version: '1.1.24'
     compile group: 'com.kakao.sdk', name: 'kakaostory', version: '1.1.24'
+
+    // Facebook SDK
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    // Material Design
+    compile 'com.roughike:bottom-bar:2.0.2'
 }

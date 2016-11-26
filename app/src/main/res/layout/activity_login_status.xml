@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".activity.SelectionActivity">
+    tools:context=".activity.LoginStatusActivity">
 
     <RelativeLayout
         android:id="@+id/facebook_layout"

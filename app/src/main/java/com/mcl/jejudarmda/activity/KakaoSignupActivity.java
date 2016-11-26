@@ -1,8 +1,9 @@
 package com.mcl.jejudarmda.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.kakao.auth.ErrorCode;
 import com.kakao.network.ErrorResult;
@@ -46,12 +47,13 @@ public class KakaoSignupActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UserProfile userProfile) {
                 Logger.d("UserProfile : " + userProfile);
-                redirectMainActivity(); //
+                notifySuccess(); //
             }
         });
     }
 
-    private void redirectMainActivity() {
+    private void notifySuccess() {
+        setResult(RESULT_OK);
         finish();
     }
 

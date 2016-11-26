@@ -96,4 +96,14 @@
         android:text="가입하기"
         android:textColor="@color/colorText" />
 
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/kakao_login_delegate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="bottom"
+        android:visibility="invisible" />
+
 </LinearLayout>

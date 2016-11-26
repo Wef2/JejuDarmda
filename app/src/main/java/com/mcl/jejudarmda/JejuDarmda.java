@@ -6,16 +6,10 @@ import android.content.Context;
 
 import com.kakao.auth.ApprovalType;
 import com.kakao.auth.AuthType;
-import com.kakao.auth.ErrorCode;
 import com.kakao.auth.IApplicationConfig;
 import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
 import com.kakao.auth.KakaoSDK;
-import com.kakao.network.ErrorResult;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.MeResponseCallback;
-import com.kakao.usermgmt.response.model.UserProfile;
-import com.kakao.util.helper.log.Logger;
 
 /**
  * Created by BK on 2016-10-04.
