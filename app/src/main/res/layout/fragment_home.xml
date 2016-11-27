@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:orientation="vertical"
-    tools:context=".activity.LoginStatusActivity">
+    android:background="@color/colorAccent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/facebook_layout"
@@ -26,6 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Facebook"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -62,6 +61,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Daum"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -97,6 +97,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Kakaostory"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -132,6 +133,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Naver Blog"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -147,20 +149,5 @@
             android:textSize="20dp" />
 
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/settings_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="설정" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/write_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_mode_edit_24dp" />
-
 
 </LinearLayout>

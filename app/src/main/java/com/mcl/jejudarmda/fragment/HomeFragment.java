@@ -1,14 +1,14 @@
-package com.mcl.jejudarmda.activity;
+package com.mcl.jejudarmda.fragment;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,13 +23,20 @@ import com.kakao.usermgmt.response.model.UserProfile;
 import com.mcl.jejudarmda.JejuDarmda;
 import com.mcl.jejudarmda.LoginStatus;
 import com.mcl.jejudarmda.R;
+import com.mcl.jejudarmda.activity.KakaoLoginActivity;
+import com.mcl.jejudarmda.activity.LoginActivity;
+import com.mcl.jejudarmda.activity.SettingsActivity;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 import net.daum.mf.oauth.MobileOAuthLibrary;
 import net.daum.mf.oauth.OAuthError;
 
-public class LoginStatusActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * Created by BK on 2016-11-26.
+ */
+
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private final String NAVER = "Naver";
     private final String KAKAO = "Kakao";
@@ -46,14 +53,14 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
     private MobileOAuthLibrary.OAuthListener oAuthListener = new MobileOAuthLibrary.OAuthListener() {
         @Override
         public void onAuthorizeSuccess() {
-            Toast.makeText(LoginStatusActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+            showToast("로그인 성공");
             LoginStatus.setDaum(true);
             checkAllStatus();
         }
 
         @Override
         public void onAuthorizeFail(OAuthError.OAuthErrorCodes errorCode, String errorMessage) {
-            Toast.makeText(LoginStatusActivity.this, "onAuthorizeFail : " + errorMessage, Toast.LENGTH_SHORT).show();
+            showToast("onAuthorizeFail : " + errorMessage);
             if (errorCode.equals(OAuthError.OAuthErrorCodes.OAuthErrorInvalidAuthorizationRequest)) {
                 // 파라미터를 잘못 사용한 경우.
             } else if (errorCode.equals(OAuthError.OAuthErrorCodes.OAuthErrorUnauthorizedClient)) {
@@ -66,13 +73,13 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         public void onRequestResourceSuccess(String response) {
-            Toast.makeText(LoginStatusActivity.this, "onRequestResourceSuccess : " + response, Toast.LENGTH_SHORT).show();
+            showToast("onRequestResourceSuccess : " + response);
             // 결과 피싱은 앱에서 담당한다.
         }
 
         @Override
         public void onRequestResourceFail(OAuthError.OAuthErrorCodes errorCode, String errorMessage) {
-            Toast.makeText(LoginStatusActivity.this, "onRequestResourceFail : " + errorMessage, Toast.LENGTH_SHORT).show();
+            showToast("onRequestResourceFail : " + errorMessage);
             if (errorCode.equals(OAuthError.OAuthErrorCodes.OAuthErrorInvalidToken)) {
                 // access token 이 없거나 만료처리된 경우 or 401 에러             // authorize() 를 통해 다시 access token을 발급 받아야함.
             } else if (errorCode.equals(OAuthError.OAuthErrorCodes.OAuthErrorInvalidResourceRequest)) {
@@ -86,7 +93,6 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
             }
         }
     };
-    private FloatingActionButton writeButton;
 
     // Naver
     private OAuthLogin oAuthLogin;
@@ -95,14 +101,13 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
         @Override
         public void run(boolean success) {
             if (success) {
-                Toast.makeText(LoginStatusActivity.this, "네이버 로그인 성공", Toast.LENGTH_SHORT).show();
+                showToast("네이버 로그인 성공");
                 LoginStatus.setNaverblog(true);
                 checkAllStatus();
             } else {
-                String errorCode = oAuthLogin.getLastErrorCode(LoginStatusActivity.this).getCode();
-                String errorDesc = oAuthLogin.getLastErrorDesc(LoginStatusActivity.this);
-                Toast.makeText(LoginStatusActivity.this, "errorCode:" + errorCode
-                        + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
+                String errorCode = oAuthLogin.getLastErrorCode(getActivity()).getCode();
+                String errorDesc = oAuthLogin.getLastErrorDesc(getActivity());
+                showToast("errorCode:" + errorCode + ", errorDesc:");
             }
         }
     };
@@ -111,47 +116,47 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
     private LogoutResponseCallback kakaoLogoutCallback = new LogoutResponseCallback() {
         @Override
         public void onCompleteLogout() {
-            Toast.makeText(LoginStatusActivity.this, "로그아웃", Toast.LENGTH_SHORT).show();
+            showToast("로그아웃");
             LoginStatus.setKakaostory(false);
             checkAllStatus();
         }
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_home);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        facebookLayout = (RelativeLayout) findViewById(R.id.facebook_layout);
-        daumLayout = (RelativeLayout) findViewById(R.id.daum_layout);
-        kakaostoryLayout = (RelativeLayout) findViewById(R.id.kakaostory_layout);
-        naverblogLayout = (RelativeLayout) findViewById(R.id.naver_blog_layout);
+        facebookLayout = (RelativeLayout) view.findViewById(R.id.facebook_layout);
+        daumLayout = (RelativeLayout) view.findViewById(R.id.daum_layout);
+        kakaostoryLayout = (RelativeLayout) view.findViewById(R.id.kakaostory_layout);
+        naverblogLayout = (RelativeLayout) view.findViewById(R.id.naver_blog_layout);
 
         facebookLayout.setOnClickListener(this);
         daumLayout.setOnClickListener(this);
         kakaostoryLayout.setOnClickListener(this);
         naverblogLayout.setOnClickListener(this);
 
-        facebookStatus = (TextView) findViewById(R.id.facebook_status_text);
-        daumStatus = (TextView) findViewById(R.id.daum_status_text);
-        kakaostoryStatus = (TextView) findViewById(R.id.kakaostory_status_text);
-        naverblogStatus = (TextView) findViewById(R.id.naver_blog_status_text);
+        facebookStatus = (TextView) view.findViewById(R.id.facebook_status_text);
+        daumStatus = (TextView) view.findViewById(R.id.daum_status_text);
+        kakaostoryStatus = (TextView) view.findViewById(R.id.kakaostory_status_text);
+        naverblogStatus = (TextView) view.findViewById(R.id.naver_blog_status_text);
 
         checkAllStatus();
 
         // Daum
         String DAUM_CLIENT_ID = getResources().getString(R.string.daum_client_id);
-        MobileOAuthLibrary.getInstance().initialize(this, DAUM_CLIENT_ID);
+        MobileOAuthLibrary.getInstance().initialize(getActivity(), DAUM_CLIENT_ID);
 
         // Naver
         oAuthLogin = OAuthLogin.getInstance();
         oAuthLogin.init(
-                this,
+                getActivity(),
                 JejuDarmda.NAVER_OAUTH_CLIENT_ID,
                 JejuDarmda.NAVER_OAUTH_CLENT_SECRET,
                 JejuDarmda.NAVER_OAUTH_CLIENT_NAME
         );
 
+        return view;
     }
 
     @Override
@@ -161,16 +166,16 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
         kakaoRequestMe();
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        Uri uri = intent.getData();
-        if (uri != null) {
-            // authorize() 호출 후에 url scheme을 통해 callback이 들어온다.
-            MobileOAuthLibrary.getInstance().handleUrlScheme(uri);
-        }
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//
+//        Uri uri = intent.getData();
+//        if (uri != null) {
+//            // authorize() 호출 후에 url scheme을 통해 callback이 들어온다.
+//            MobileOAuthLibrary.getInstance().handleUrlScheme(uri);
+//        }
+//    }
 
     private void setTextByStatus(boolean status, TextView textView) {
         if (status) {
@@ -188,8 +193,8 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
         setTextByStatus(LoginStatus.getKakaostory(), kakaostoryStatus);
         setTextByStatus(LoginStatus.getNaverblog(), naverblogStatus);
         if (!LoginStatus.hasConnection()) {
-            startActivity(new Intent(LoginStatusActivity.this, LoginActivity.class));
-            finish();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            getActivity().finish();
         }
     }
 
@@ -204,14 +209,12 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
         } else if (v.equals(naverblogLayout)) {
             buildAndShowDialog(NAVER, LoginStatus.getNaverblog());
         } else if (v.equals(settingsButton)) {
-            startActivity(new Intent(LoginStatusActivity.this, SettingsActivity.class));
-        } else if (v.equals(writeButton)) {
-            startActivity(new Intent(LoginStatusActivity.this, WritingActivity.class));
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
         }
     }
 
     private void buildAndShowDialog(final String channel, final boolean status) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this).setTitle(channel);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity()).setTitle(channel);
         alertDialogBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -240,13 +243,13 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
     public void login(String channel) {
         switch (channel) {
             case NAVER:
-                oAuthLogin.startOauthLoginActivity(this, oAuthLoginHandler);
+                oAuthLogin.startOauthLoginActivity(getActivity(), oAuthLoginHandler);
                 break;
             case KAKAO:
-                startActivity(new Intent(LoginStatusActivity.this, KakaoLoginActivity.class));
+                startActivity(new Intent(getActivity(), KakaoLoginActivity.class));
                 break;
             case DAUM:
-                MobileOAuthLibrary.getInstance().authorize(LoginStatusActivity.this, oAuthListener);
+                MobileOAuthLibrary.getInstance().authorize(getActivity(), oAuthListener);
                 break;
         }
     }
@@ -254,7 +257,7 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
     public void logout(String channel) {
         switch (channel) {
             case NAVER:
-                oAuthLogin.logout(this);
+                oAuthLogin.logout(getActivity());
                 LoginStatus.setNaverblog(false);
                 break;
             case KAKAO:
@@ -264,10 +267,10 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
             case DAUM:
                 MobileOAuthLibrary.getInstance().expireAuthorization();
                 if (MobileOAuthLibrary.getInstance().isAuthorized()) {
-                    Toast.makeText(LoginStatusActivity.this, "로그아웃 실패", Toast.LENGTH_SHORT).show();
+                    showToast("로그아웃 실패");
                 } else {
                     LoginStatus.setDaum(false);
-                    Toast.makeText(LoginStatusActivity.this, "로그아웃 성공", Toast.LENGTH_SHORT).show();
+                    showToast("로그아웃 성공");
                 }
         }
         checkAllStatus();
@@ -304,6 +307,10 @@ public class LoginStatusActivity extends AppCompatActivity implements View.OnCli
                 checkAllStatus();
             }
         });
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
 }

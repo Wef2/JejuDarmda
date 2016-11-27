@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        id="@+id/tab_home"
         icon="@drawable/home"
+        id="@+id/tab_home"
         title="Home" />
     <tab
-        id="@+id/tab_posting"
         icon="@drawable/posting"
+        id="@+id/tab_posting"
         title="Posting" />
     <tab
-        id="@+id/tab_graph"
         icon="@drawable/graph"
+        id="@+id/tab_graph"
         title="Graph" />
 </tabs>
