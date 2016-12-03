@@ -26,12 +26,10 @@ import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final int REQUEST_CODE = 100;
-
-    private LoginButton kakaoLoginDelegate;
     private ImageView naverLoginButton, kakaoLoginButton;
 
     // Kakao
+    private LoginButton kakaoLoginDelegate;
     private SessionCallback kakaoCallback;
 
     // Naver
@@ -73,24 +71,17 @@ public class LoginActivity extends AppCompatActivity {
                 JejuDarmda.NAVER_OAUTH_CLIENT_NAME
         );
 
+        kakaoLoginDelegate = (LoginButton) findViewById(R.id.kakao_login_delegate);
         kakaoLoginButton = (ImageView) findViewById(R.id.kakao_login_button);
         kakaoLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 kakaoLoginDelegate.performClick();
-                Log.i("Click", "Click");
             }
         });
-        kakaoLoginDelegate = (LoginButton) findViewById(R.id.kakao_login_delegate);
 
         kakaoCallback = new SessionCallback();
         Session.getCurrentSession().addCallback(kakaoCallback);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        kakaoRequestMe();
     }
 
     @Override
@@ -98,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(kakaoCallback);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -109,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginSuccess() {
+        Log.i("SUCCESS", "LOGIN");
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
@@ -116,38 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void redirectSignupActivity() {
         final Intent intent = new Intent(this, KakaoSignupActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivityForResult(intent, REQUEST_CODE);
-    }
-
-    protected void kakaoRequestMe() {
-        Log.i("TEST", "REQUEST");
-        UserManagement.requestMe(new MeResponseCallback() {
-            @Override
-            public void onFailure(ErrorResult errorResult) {
-                Log.i("ERROR", errorResult.toString());
-                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
-                if (result == ErrorCode.CLIENT_ERROR_CODE) {
-                } else {
-                }
-            }
-
-            @Override
-            public void onSessionClosed(ErrorResult errorResult) {
-                Log.i("CLOSE", errorResult.toString());
-                LoginStatus.setKakaostory(false);
-            }
-
-            @Override
-            public void onNotSignedUp() {
-                LoginStatus.setKakaostory(false);
-            }
-
-            @Override
-            public void onSuccess(UserProfile userProfile) {
-                LoginStatus.setKakaostory(true);
-                loginSuccess();
-            }
-        });
+        startActivity(intent);
+        finish();
     }
 
     private class SessionCallback implements ISessionCallback {
@@ -164,4 +125,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
 }

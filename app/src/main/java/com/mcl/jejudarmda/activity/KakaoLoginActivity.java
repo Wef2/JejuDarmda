@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
+import com.kakao.usermgmt.LoginButton;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 import com.mcl.jejudarmda.R;
@@ -17,7 +18,6 @@ public class KakaoLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_kakao_login);
 
         callback = new SessionCallback();

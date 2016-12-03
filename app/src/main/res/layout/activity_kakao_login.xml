@@ -10,7 +10,7 @@
     tools:context=".activity.KakaoLoginActivity">
 
     <com.kakao.usermgmt.LoginButton
-        android:id="@+id/com_kakao_login"
+        android:id="@+id/kakao_login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

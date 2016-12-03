@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,6 @@ import com.mcl.jejudarmda.LoginStatus;
 import com.mcl.jejudarmda.R;
 import com.mcl.jejudarmda.activity.KakaoLoginActivity;
 import com.mcl.jejudarmda.activity.LoginActivity;
-import com.mcl.jejudarmda.activity.SettingsActivity;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
@@ -48,7 +46,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private RelativeLayout facebookLayout, daumLayout, kakaostoryLayout, naverblogLayout;
     private TextView facebookStatus, daumStatus, kakaostoryStatus, naverblogStatus;
-    private Button settingsButton;
 
     private MobileOAuthLibrary.OAuthListener oAuthListener = new MobileOAuthLibrary.OAuthListener() {
         @Override
@@ -208,8 +205,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             buildAndShowDialog(KAKAO, LoginStatus.getKakaostory());
         } else if (v.equals(naverblogLayout)) {
             buildAndShowDialog(NAVER, LoginStatus.getNaverblog());
-        } else if (v.equals(settingsButton)) {
-            startActivity(new Intent(getActivity(), SettingsActivity.class));
         }
     }
 
