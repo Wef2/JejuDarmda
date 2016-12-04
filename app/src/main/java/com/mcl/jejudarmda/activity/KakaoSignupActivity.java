@@ -3,6 +3,7 @@ package com.mcl.jejudarmda.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.kakao.auth.ErrorCode;
 import com.kakao.network.ErrorResult;
@@ -46,9 +47,10 @@ public class KakaoSignupActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(UserProfile userProfile) {
+                Log.i("User Profile", userProfile.toString());
                 LoginStatus.setKakaostory(true);
                 final Intent intent = new Intent(KakaoSignupActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }

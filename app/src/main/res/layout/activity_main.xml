@@ -5,10 +5,156 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent">
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/facebook_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/facebook_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/facebook" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Facebook"
+                android:textColor="@color/colorText"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/facebook_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="OFF"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/daum_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/daum_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/daum" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Daum"
+                android:textColor="@color/colorText"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/daum_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="OFF"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/kakaostory_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/kakaostory_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/kakaostory" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Kakaostory"
+                android:textColor="@color/colorText"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/kakaostory_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="OFF"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/naver_blog_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/naver_blog_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/naver" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Naver Blog"
+                android:textColor="@color/colorText"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/naver_blog_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="OFF"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottom_bar"
@@ -21,5 +167,11 @@
         app:bb_inActiveTabAlpha="1"
         app:bb_inActiveTabColor="@color/colorText"
         app:bb_tabXmlResource="@xml/bottom_bar_tabs" />
+
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/kakao_login_delegate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
 
 </RelativeLayout>

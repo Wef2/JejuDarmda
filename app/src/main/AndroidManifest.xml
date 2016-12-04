@@ -27,19 +27,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.LoginStatusActivity"
-            android:label="@string/login_status"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="daum-6065286625264640782" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".activity.WritingActivity"
             android:label="@string/writing" />
         <activity
