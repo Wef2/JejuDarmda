@@ -145,7 +145,6 @@
                 android:id="@+id/naver_blog_status_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="OFF"
@@ -173,5 +172,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_login_delegate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

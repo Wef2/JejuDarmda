@@ -13,10 +13,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.LoginButton;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
@@ -29,6 +34,7 @@ import com.mcl.jejudarmda.R;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import net.daum.mf.oauth.MobileOAuthLibrary;
@@ -46,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private RelativeLayout facebookLayout, daumLayout, kakaostoryLayout, naverblogLayout;
     private TextView facebookStatus, daumStatus, kakaostoryStatus, naverblogStatus;
+
+    // Delegate
+    private com.facebook.login.widget.LoginButton facebookLoginDelegate;
+    private LoginButton kakaoLoginDelegate;
 
     private MobileOAuthLibrary.OAuthListener oAuthListener = new MobileOAuthLibrary.OAuthListener() {
         @Override
@@ -109,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-
     // Kakao
     private LogoutResponseCallback kakaoLogoutCallback = new LogoutResponseCallback() {
         @Override
@@ -122,17 +131,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SessionCallback callback;
 
+    private CallbackManager facebookCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        kakaoLoginDelegate = (LoginButton) findViewById(R.id.kakao_login_delegate);
+        facebookLoginDelegate = (com.facebook.login.widget.LoginButton) findViewById(R.id.facebook_login_delegate);
+        facebookLoginDelegate.setReadPermissions("email");
+
+        facebookCallbackManager = CallbackManager.Factory.create();
+        facebookLoginDelegate.registerCallback(facebookCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                LoginStatus.setFacebook(true);
+                checkAllStatus();
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+            }
+        });
+
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+            @Override
+            public void onTabReSelected(@IdRes int tabId) {
+                if (tabId == R.id.tab_home) {
+                } else if (tabId == R.id.tab_posting) {
+                    Intent intent = new Intent(MainActivity.this, PostingActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_home) {
                 } else if (tabId == R.id.tab_posting) {
+                    Intent intent = new Intent(MainActivity.this, PostingActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -247,6 +291,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void login(String channel) {
         switch (channel) {
+            case FACEBOOK:
+                facebookLoginDelegate.performClick();
+                break;
             case NAVER:
                 oAuthLogin.startOauthLoginActivity(this, oAuthLoginHandler);
                 break;
@@ -335,6 +382,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+        facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     protected void redirectSignupActivity() {
@@ -355,7 +403,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (exception != null) {
                 Logger.e(exception);
             }
-            setContentView(R.layout.activity_kakao_login);
         }
     }
 }

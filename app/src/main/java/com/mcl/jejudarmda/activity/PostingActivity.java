@@ -26,7 +26,7 @@ import com.mcl.jejudarmda.VolleyRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class WritingActivity extends AppCompatActivity {
+public class PostingActivity extends AppCompatActivity {
 
     private final String NAVER_URL = "https://openapi.naver.com/blog/writePost.json";
     private EditText titleEdit, contentsEdit;
@@ -34,7 +34,7 @@ public class WritingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_writing);
+        setContentView(R.layout.activity_posting);
 
         titleEdit = (EditText) findViewById(R.id.title_edit);
         contentsEdit = (EditText) findViewById(R.id.contents_edit);
@@ -76,7 +76,7 @@ public class WritingActivity extends AppCompatActivity {
         VolleyRequest.naverGet(url, null, new Response.Listener<JsonObject>() {
             @Override
             public void onResponse(JsonObject response) {
-                Toast.makeText(WritingActivity.this, response.toString(), Toast.LENGTH_SHORT);
+                Toast.makeText(PostingActivity.this, response.toString(), Toast.LENGTH_SHORT);
             }
         });
     }
@@ -128,7 +128,7 @@ public class WritingActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(AccessTokenInfoResponse accessTokenInfoResponse) {
-                Toast.makeText(WritingActivity.this, accessTokenInfoResponse.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PostingActivity.this, accessTokenInfoResponse.toString(), Toast.LENGTH_SHORT).show();
                 KakaoStoryService.requestIsStoryUser(new StoryResponseCallback<Boolean>() {
                     @Override
                     public void onNotKakaoStoryUser() {
@@ -147,7 +147,7 @@ public class WritingActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(Boolean result) {
-                        Toast.makeText(WritingActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostingActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
