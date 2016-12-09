@@ -13,9 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private RelativeLayout facebookLayout, daumLayout, kakaostoryLayout, naverblogLayout;
     private TextView facebookStatus, daumStatus, kakaostoryStatus, naverblogStatus;
+
+    private AccessToken accessToken;
 
     // Delegate
     private com.facebook.login.widget.LoginButton facebookLoginDelegate;
@@ -196,6 +200,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         kakaostoryStatus = (TextView) findViewById(R.id.kakaostory_status_text);
         naverblogStatus = (TextView) findViewById(R.id.naver_blog_status_text);
 
+        // Facebook Login Check
+        accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            LoginStatus.setFacebook(true);
+        }
+        
         checkAllStatus();
 
         // Daum
@@ -298,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 oAuthLogin.startOauthLoginActivity(this, oAuthLoginHandler);
                 break;
             case KAKAO:
+                kakaoLoginDelegate.performClick();
                 break;
             case DAUM:
                 MobileOAuthLibrary.getInstance().authorize(this, oAuthListener);
@@ -307,6 +318,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void logout(String channel) {
         switch (channel) {
+            case FACEBOOK:
+                LoginManager.getInstance().logOut();
+                LoginStatus.setFacebook(false);
+                break;
             case NAVER:
                 oAuthLogin.logout(this);
                 LoginStatus.setNaverblog(false);
