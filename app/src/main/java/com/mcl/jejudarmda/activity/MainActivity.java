@@ -31,9 +31,11 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+import com.mcl.jejudarmda.DaumTokenExtractor;
 import com.mcl.jejudarmda.JejuDarmda;
 import com.mcl.jejudarmda.LoginStatus;
 import com.mcl.jejudarmda.R;
+import com.mcl.jejudarmda.TokenManager;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.roughike.bottombar.BottomBar;
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private AccessToken accessToken;
 
+    private DaumTokenExtractor daumTokenExtractor;
+
     // Delegate
     private com.facebook.login.widget.LoginButton facebookLoginDelegate;
     private LoginButton kakaoLoginDelegate;
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             showToast("로그인 성공");
             LoginStatus.setDaum(true);
             checkAllStatus();
+
             MobileOAuthLibrary.getInstance().requestResourceWithPath(getApplicationContext(), oAuthListener, "/user/v1/show.json");
         }
 
@@ -124,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        daumTokenExtractor = new DaumTokenExtractor();
 
         kakaoLoginDelegate = (LoginButton) findViewById(R.id.kakao_login_delegate);
         facebookLoginDelegate = (com.facebook.login.widget.LoginButton) findViewById(R.id.facebook_login_delegate);
@@ -191,9 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Daum Login Check
         Uri uri = getIntent().getData();
-        if (uri != null) {
-            MobileOAuthLibrary.getInstance().handleUrlScheme(uri);
-        }
+        extractDaumTokenFromUri(uri);
 
         checkAllStatus();
 
@@ -368,20 +373,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    private void extractDaumTokenFromUri(Uri uri) {
+        if (uri != null) {
+            MobileOAuthLibrary.getInstance().handleUrlScheme(uri);
+            String daumToken = daumTokenExtractor.extract(uri);
+            TokenManager.setDaumToken(daumToken);
+            Log.i("EXTRACT", daumToken);
+        }
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
         Uri uri = intent.getData();
-        if (uri != null) {
-            // authorize() 호출 후에 url scheme을 통해 callback이 들어온다.
-            MobileOAuthLibrary.getInstance().handleUrlScheme(uri);
-        }
+        extractDaumTokenFromUri(uri);
     }
 
     @Override
@@ -413,4 +418,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

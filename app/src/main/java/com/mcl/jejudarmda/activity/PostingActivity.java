@@ -21,6 +21,7 @@ import com.kakao.network.ErrorResult;
 import com.kakao.util.KakaoParameterException;
 import com.kakao.util.helper.log.Logger;
 import com.mcl.jejudarmda.R;
+import com.mcl.jejudarmda.TokenManager;
 import com.mcl.jejudarmda.VolleyRequest;
 
 import java.io.UnsupportedEncodingException;
@@ -28,6 +29,8 @@ import java.net.URLEncoder;
 
 public class PostingActivity extends AppCompatActivity {
 
+    private String DAUM_BLOG_NAME = "apitest123";
+    private String DAUM_URL = "https://apis.daum.net/blog/v1/";
     private final String NAVER_URL = "https://openapi.naver.com/blog/writePost.json";
     private EditText titleEdit, contentsEdit;
 
@@ -39,7 +42,9 @@ public class PostingActivity extends AppCompatActivity {
         titleEdit = (EditText) findViewById(R.id.title_edit);
         contentsEdit = (EditText) findViewById(R.id.contents_edit);
 
-        requestKakaoAccessTokenInfo();
+//        requestKakaoAccessTokenInfo();
+
+        makeDaumApiUrl(DAUM_BLOG_NAME);
     }
 
     @Override
@@ -64,9 +69,27 @@ public class PostingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void makeDaumApiUrl(String daumBlogName) {
+        DAUM_URL = DAUM_URL + daumBlogName + "/write.json?access_token=" + TokenManager.getDaumToken();
+    }
+
     public void writePost(String title, String contents) {
-        naverPost(title, contents);
-        kakaoPost(contents);
+        daumPost(title, contents);
+//        naverPost(title, contents);
+//        kakaoPost(contents);
+    }
+
+    public void daumPost(String title, String contents) {
+        String url = DAUM_URL;
+        url = url + "&title=" + title;
+        url = url + "&content=" + contents;
+        url = url + "&tag=" + title;
+        VolleyRequest.daumRequest(url, new Response.Listener<JsonObject>() {
+            @Override
+            public void onResponse(JsonObject response) {
+                Toast.makeText(PostingActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void naverPost(String title, String contents) {
@@ -76,12 +99,12 @@ public class PostingActivity extends AppCompatActivity {
         VolleyRequest.naverGet(url, null, new Response.Listener<JsonObject>() {
             @Override
             public void onResponse(JsonObject response) {
-                Toast.makeText(PostingActivity.this, response.toString(), Toast.LENGTH_SHORT);
+                Toast.makeText(PostingActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void kakaoPost(String contents)  {
+    public void kakaoPost(String contents) {
         try {
             KakaoStoryService.requestPostNote(new StoryResponseCallback<MyStoryInfo>() {
                 @Override
