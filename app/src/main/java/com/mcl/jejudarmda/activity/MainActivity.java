@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTabReSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_home) {
                 } else if (tabId == R.id.tab_posting) {
-                    Intent intent = new Intent(MainActivity.this, PostingActivity.class);
+                    Intent intent = new Intent(MainActivity.this, PostingOptionActivity.class);
                     startActivity(intent);
                 }
             }
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_home) {
                 } else if (tabId == R.id.tab_posting) {
-                    Intent intent = new Intent(MainActivity.this, PostingActivity.class);
+                    Intent intent = new Intent(MainActivity.this, PostingOptionActivity.class);
                     startActivity(intent);
                 }
             }

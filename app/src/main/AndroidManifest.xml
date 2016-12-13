@@ -13,6 +13,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider549202778622531"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -47,6 +52,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.PostingOptionActivity" />
         <activity
             android:name=".activity.PostingActivity"
             android:label="@string/writing" />

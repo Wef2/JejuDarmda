@@ -46,6 +46,7 @@ public class VolleyRequest {
         };
     }
 
+
     public static void daumRequest(String url, Response.Listener<JsonObject> listener) {
         naverRequest(Request.Method.POST, url, null, listener, errorListener);
     }
@@ -55,11 +56,11 @@ public class VolleyRequest {
         requestQueue.add(request);
     }
 
-    public static void naverPost(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
+    public static void post(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
         naverRequest(Request.Method.POST, url, jsonRequest, listener, errorListener);
     }
 
-    public static void naverGet(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
+    public static void get(String url, JsonObject jsonRequest, Response.Listener<JsonObject> listener) {
         naverRequest(Request.Method.GET, url, jsonRequest, listener, errorListener);
     }
 
